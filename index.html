@@ -88,11 +88,25 @@
   .brand .name b { font-family: var(--display); font-size: 1.04rem; letter-spacing: -.01em; }
   .brand .name span { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; opacity: .82; }
 
-  /* Patriotic accents: tricolor "waves" woven through the page */
-  .wave-rule { width: 100%; height: 30px; overflow: hidden; line-height: 0; pointer-events: none; opacity: .92; }
-  .wave-rule svg { display: block; width: 100%; height: 100%; }
+  /* Patriotic accents */
   .flag { width: 25px; height: 16px; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.14); display: block; flex: none; }
   .flag svg { display: block; width: 100%; height: 100%; }
+
+  /* Unfurling vertical banners: deploy downward on scroll, like flags dropped from a building */
+  .banners { display: none; }
+  @media (min-width: 1240px) and (min-height: 560px) {
+    .banners { display: block; position: fixed; inset: 0; z-index: 5; pointer-events: none; }
+  }
+  .banner { position: fixed; top: 62px; width: 46px; transform-origin: top center; animation: sway 6s ease-in-out infinite; }
+  .banner-left { left: calc((100vw - 1140px) / 2 - 50px); }
+  .banner-right { right: calc((100vw - 1140px) / 2 - 50px); animation-delay: -3s; }
+  .banner .cap { height: 7px; border-radius: 4px; background: linear-gradient(#5b6572, #2c333c); box-shadow: 0 2px 5px rgba(0,0,0,.3); position: relative; z-index: 2; }
+  .cloth { height: min(52vh, 460px); transform-origin: top center; transform: scaleY(var(--deploy, 0)); transition: transform .1s linear; position: relative; box-shadow: 3px 7px 18px rgba(0,0,0,.22); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%); }
+  .cloth.co { background: linear-gradient(90deg, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%); }
+  .cloth.vr { background: linear-gradient(90deg, #FCD116 0 33.333%, #CE1126 33.333% 66.666%, #178A3A 66.666% 100%); }
+  .cloth::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 5px, rgba(0,0,0,.08) 5px 11px); }
+  @keyframes sway { 0%, 100% { transform: rotate(-.8deg); } 50% { transform: rotate(.8deg); } }
+  @media (prefers-reduced-motion: reduce) { .banner { animation: none; } .cloth { transition: none; } }
 
   nav.tabs { display: flex; gap: 2px; }
   nav.tabs button {
@@ -301,8 +315,7 @@
   .foot-col a:hover { color: #fff; }
   .foot-about p { color: #bcd0e8; font-size: .94rem; max-width: 34ch; margin-top: 14px; }
   .foot-sep { display: flex; align-items: center; gap: 16px; margin: 6px 0 14px; }
-  .foot-sep .wave-line { flex: 1; height: 24px; overflow: hidden; line-height: 0; opacity: .92; }
-  .foot-sep .wave-line svg { display: block; width: 100%; height: 100%; }
+  .foot-sep .rule { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent); }
   .foot-sep .flag { box-shadow: 0 0 0 1px rgba(255,255,255,.3); }
   .foot-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--header-line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #a7bdd8; font-size: .86rem; }
 
@@ -385,6 +398,11 @@
   </div>
 </header>
 
+<div class="banners" aria-hidden="true">
+  <div class="banner banner-left"><div class="cap"></div><div class="cloth co"></div></div>
+  <div class="banner banner-right"><div class="cap"></div><div class="cloth vr"></div></div>
+</div>
+
 <main>
 <!-- ================= INICIO ================= -->
 <div class="tabpanel" id="panel-inicio">
@@ -421,7 +439,6 @@
     </div>
   </section>
 
-  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-soft">
     <div class="wrap split">
       <div class="media"><img src="assets/familia.webp" alt="Familia frente a su nueva vivienda" width="700" height="525"></div>
@@ -473,7 +490,6 @@
     </div>
   </section>
 
-  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-soft">
     <div class="wrap">
       <div class="section-head">
@@ -524,7 +540,6 @@
     </div>
   </section>
 
-  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-soft">
     <div class="wrap">
       <div class="section-head">
@@ -701,7 +716,6 @@
     </div>
   </div>
 
-  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-brand">
     <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px">
       <h2 style="font-size:clamp(1.6rem,3.4vw,2.4rem);max-width:20ch">¿No sabes a cuál programa te puedes aplicar?</h2>
@@ -721,7 +735,6 @@
           <h2>Historias de nuestra comunidad</h2>
           <p>Eventos, celebraciones y novedades de la Asociación de Vivienda Popular Mi Sueño, Mi Hogar.</p>
         </div>
-        <div class="wave-rule" aria-hidden="true" style="margin-bottom:26px"></div>
         <div class="grid grid-3" id="blogGrid"></div>
       </div>
 
@@ -777,10 +790,10 @@
       </div>
     </div>
     <div class="foot-sep">
-      <span class="wave-line" aria-hidden="true"></span>
+      <span class="rule" aria-hidden="true"></span>
       <span class="flag" title="Colombia" role="img" aria-label="Bandera de Colombia"><svg viewBox="0 0 24 16" preserveAspectRatio="none"><rect width="24" height="8" fill="#FCD116"/><rect y="8" width="24" height="4" fill="#003893"/><rect y="12" width="24" height="4" fill="#CE1126"/></svg></span>
       <span class="flag" title="Villa del Rosario" role="img" aria-label="Bandera de Villa del Rosario"><svg viewBox="0 0 24 15" preserveAspectRatio="none"><rect width="24" height="5" fill="#FCD116"/><rect y="5" width="24" height="5" fill="#CE1126"/><rect y="10" width="24" height="5" fill="#178a3a"/></svg></span>
-      <span class="wave-line" aria-hidden="true"></span>
+      <span class="rule" aria-hidden="true"></span>
     </div>
     <div class="foot-bottom">
       <span>© 2024 Asociación de Vivienda Popular Mi Sueño, Mi Hogar. Todos los derechos reservados.</span>
@@ -846,23 +859,19 @@
   var homeBlog = $("#homeBlog");
   if (homeBlog) homeBlog.innerHTML = POSTS.slice(0, 3).map(cardHTML).join("");
 
-  /* ---------- Patriotic wave motifs (tricolor "ondas") ---------- */
-  function waveSVG(w) {
-    var lines = [["#FCD116", 9], ["#003893", 16], ["#CE1126", 23]], amp = 6, period = 150, paths = "", li, x;
-    for (li = 0; li < lines.length; li++) {
-      var cy = lines[li][1], d = "M0," + cy, up = true;
-      for (x = 0; x < w; x += period / 2) {
-        var ex = Math.min(x + period / 2, w), cx = (x + ex) / 2, cyc = up ? cy - amp : cy + amp;
-        d += " Q" + cx.toFixed(1) + "," + cyc.toFixed(1) + " " + ex.toFixed(1) + "," + cy;
-        up = !up;
-      }
-      paths += '<path d="' + d + '" fill="none" stroke="' + lines[li][0] + '" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>';
-    }
-    return '<svg viewBox="0 0 ' + w + ' 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' + paths + "</svg>";
+  /* ---------- Unfurling banners: deploy on scroll ---------- */
+  var DEPLOY_DIST = 520;
+  var ticking = false;
+  function updateDeploy() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    var d = Math.max(0, Math.min(1, y / DEPLOY_DIST));
+    document.documentElement.style.setProperty("--deploy", d.toFixed(3));
+    ticking = false;
   }
-  var fullWave = waveSVG(1200);
-  $$(".wave-rule").forEach(function (el) { el.innerHTML = fullWave; });
-  $$(".foot-sep .wave-line").forEach(function (el) { el.innerHTML = waveSVG(320); });
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(updateDeploy); }
+  }, { passive: true });
+  updateDeploy();
 
   function openArticle(id, push) {
     var p = null, i;
