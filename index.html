@@ -88,13 +88,11 @@
   .brand .name b { font-family: var(--display); font-size: 1.04rem; letter-spacing: -.01em; }
   .brand .name span { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; opacity: .82; }
 
-  /* Patriotic accents: Colombia tricolor ribbon + flag chips (always visible in sticky header) */
-  .tricolor { height: 4px; width: 100%; background: linear-gradient(90deg, #FCD116 0 33.333%, #003893 33.333% 66.666%, #CE1126 66.666% 100%); }
-  .flags { display: flex; align-items: center; gap: 7px; }
+  /* Patriotic accents: tricolor "waves" woven through the page */
+  .wave-rule { width: 100%; height: 30px; overflow: hidden; line-height: 0; pointer-events: none; opacity: .92; }
+  .wave-rule svg { display: block; width: 100%; height: 100%; }
   .flag { width: 25px; height: 16px; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.14); display: block; flex: none; }
   .flag svg { display: block; width: 100%; height: 100%; }
-  .flag-sep { width: 1px; height: 18px; background: var(--line); }
-  @media (max-width: 680px) { .header-actions .flags { display: none; } }
 
   nav.tabs { display: flex; gap: 2px; }
   nav.tabs button {
@@ -302,8 +300,10 @@
   .foot-col a, .foot-col li { color: #bcd0e8; font-size: .94rem; cursor: pointer; }
   .foot-col a:hover { color: #fff; }
   .foot-about p { color: #bcd0e8; font-size: .94rem; max-width: 34ch; margin-top: 14px; }
-  .foot-flags { display: flex; align-items: center; gap: 10px; margin-top: 16px; color: #bcd0e8; font-size: .86rem; }
-  .foot-flags .flag { box-shadow: 0 0 0 1px rgba(255,255,255,.25); }
+  .foot-sep { display: flex; align-items: center; gap: 16px; margin: 6px 0 14px; }
+  .foot-sep .wave-line { flex: 1; height: 24px; overflow: hidden; line-height: 0; opacity: .92; }
+  .foot-sep .wave-line svg { display: block; width: 100%; height: 100%; }
+  .foot-sep .flag { box-shadow: 0 0 0 1px rgba(255,255,255,.3); }
   .foot-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--header-line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #a7bdd8; font-size: .86rem; }
 
   .toast {
@@ -362,7 +362,6 @@
 
 <!-- ================= HEADER ================= -->
 <header class="site">
-  <div class="tricolor" aria-hidden="true"></div>
   <div class="wrap bar">
     <a class="brand" href="#inicio" data-tab="inicio" aria-label="Mi Sueño, Mi Hogar — inicio">
       <span class="badge"><img src="assets/logo.png" alt="" width="30" height="30"></span>
@@ -375,10 +374,6 @@
       <button data-tab="blog">Blog</button>
     </nav>
     <div class="header-actions">
-      <span class="flags">
-        <span class="flag" title="Colombia" role="img" aria-label="Bandera de Colombia"><svg viewBox="0 0 24 16" preserveAspectRatio="none"><rect width="24" height="8" fill="#FCD116"/><rect y="8" width="24" height="4" fill="#003893"/><rect y="12" width="24" height="4" fill="#CE1126"/></svg></span>
-        <span class="flag" title="Villa del Rosario" role="img" aria-label="Bandera de Villa del Rosario"><svg viewBox="0 0 24 15" preserveAspectRatio="none"><rect width="24" height="5" fill="#FCD116"/><rect y="5" width="24" height="5" fill="#CE1126"/><rect y="10" width="24" height="5" fill="#178a3a"/></svg></span>
-      </span>
       <a class="btn btn-wa hide-sm" href="https://wa.me/573123045226" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 001.516 5.26l-.999 3.648 3.973-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
         WhatsApp
@@ -426,6 +421,7 @@
     </div>
   </section>
 
+  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-soft">
     <div class="wrap split">
       <div class="media"><img src="assets/familia.webp" alt="Familia frente a su nueva vivienda" width="700" height="525"></div>
@@ -477,6 +473,7 @@
     </div>
   </section>
 
+  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-soft">
     <div class="wrap">
       <div class="section-head">
@@ -527,6 +524,7 @@
     </div>
   </section>
 
+  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-soft">
     <div class="wrap">
       <div class="section-head">
@@ -703,6 +701,7 @@
     </div>
   </div>
 
+  <div class="wave-rule" aria-hidden="true"></div>
   <section class="band-brand">
     <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px">
       <h2 style="font-size:clamp(1.6rem,3.4vw,2.4rem);max-width:20ch">¿No sabes a cuál programa te puedes aplicar?</h2>
@@ -722,6 +721,7 @@
           <h2>Historias de nuestra comunidad</h2>
           <p>Eventos, celebraciones y novedades de la Asociación de Vivienda Popular Mi Sueño, Mi Hogar.</p>
         </div>
+        <div class="wave-rule" aria-hidden="true" style="margin-bottom:26px"></div>
         <div class="grid grid-3" id="blogGrid"></div>
       </div>
 
@@ -739,7 +739,6 @@
 
 <!-- ================= FOOTER ================= -->
 <footer class="site">
-  <div class="tricolor" aria-hidden="true"></div>
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-col foot-about">
@@ -748,13 +747,6 @@
           <span class="name"><b>Mi Sueño, Mi Hogar</b><span>Asociación de Vivienda Popular</span></span>
         </div>
         <p>Ayudamos a las familias a organizarse para acceder, mejorar y legalizar su vivienda, de la mano de los programas del Gobierno Nacional.</p>
-        <div class="foot-flags">
-          <span class="flags">
-            <span class="flag" title="Colombia" role="img" aria-label="Bandera de Colombia"><svg viewBox="0 0 24 16" preserveAspectRatio="none"><rect width="24" height="8" fill="#FCD116"/><rect y="8" width="24" height="4" fill="#003893"/><rect y="12" width="24" height="4" fill="#CE1126"/></svg></span>
-            <span class="flag" title="Villa del Rosario" role="img" aria-label="Bandera de Villa del Rosario"><svg viewBox="0 0 24 15" preserveAspectRatio="none"><rect width="24" height="5" fill="#FCD116"/><rect y="5" width="24" height="5" fill="#CE1126"/><rect y="10" width="24" height="5" fill="#178a3a"/></svg></span>
-          </span>
-          <span>Orgullosamente de Villa del Rosario, Colombia</span>
-        </div>
       </div>
       <div class="foot-col">
         <h4>Secciones</h4>
@@ -783,6 +775,12 @@
           <li><a href="https://wa.me/573123045226" target="_blank" rel="noopener">Escríbenos por WhatsApp →</a></li>
         </ul>
       </div>
+    </div>
+    <div class="foot-sep">
+      <span class="wave-line" aria-hidden="true"></span>
+      <span class="flag" title="Colombia" role="img" aria-label="Bandera de Colombia"><svg viewBox="0 0 24 16" preserveAspectRatio="none"><rect width="24" height="8" fill="#FCD116"/><rect y="8" width="24" height="4" fill="#003893"/><rect y="12" width="24" height="4" fill="#CE1126"/></svg></span>
+      <span class="flag" title="Villa del Rosario" role="img" aria-label="Bandera de Villa del Rosario"><svg viewBox="0 0 24 15" preserveAspectRatio="none"><rect width="24" height="5" fill="#FCD116"/><rect y="5" width="24" height="5" fill="#CE1126"/><rect y="10" width="24" height="5" fill="#178a3a"/></svg></span>
+      <span class="wave-line" aria-hidden="true"></span>
     </div>
     <div class="foot-bottom">
       <span>© 2024 Asociación de Vivienda Popular Mi Sueño, Mi Hogar. Todos los derechos reservados.</span>
@@ -847,6 +845,24 @@
   if (blogGrid) blogGrid.innerHTML = POSTS.map(cardHTML).join("");
   var homeBlog = $("#homeBlog");
   if (homeBlog) homeBlog.innerHTML = POSTS.slice(0, 3).map(cardHTML).join("");
+
+  /* ---------- Patriotic wave motifs (tricolor "ondas") ---------- */
+  function waveSVG(w) {
+    var lines = [["#FCD116", 9], ["#003893", 16], ["#CE1126", 23]], amp = 6, period = 150, paths = "", li, x;
+    for (li = 0; li < lines.length; li++) {
+      var cy = lines[li][1], d = "M0," + cy, up = true;
+      for (x = 0; x < w; x += period / 2) {
+        var ex = Math.min(x + period / 2, w), cx = (x + ex) / 2, cyc = up ? cy - amp : cy + amp;
+        d += " Q" + cx.toFixed(1) + "," + cyc.toFixed(1) + " " + ex.toFixed(1) + "," + cy;
+        up = !up;
+      }
+      paths += '<path d="' + d + '" fill="none" stroke="' + lines[li][0] + '" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>';
+    }
+    return '<svg viewBox="0 0 ' + w + ' 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' + paths + "</svg>";
+  }
+  var fullWave = waveSVG(1200);
+  $$(".wave-rule").forEach(function (el) { el.innerHTML = fullWave; });
+  $$(".foot-sep .wave-line").forEach(function (el) { el.innerHTML = waveSVG(320); });
 
   function openArticle(id, push) {
     var p = null, i;
