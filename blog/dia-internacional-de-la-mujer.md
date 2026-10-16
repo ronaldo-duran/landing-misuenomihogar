@@ -17,10 +17,6 @@ contribuyen con su esfuerzo y dedicación a hacer de nuestros hogares y nuestra 
 lugar mejor. El espíritu de solidaridad y empoderamiento llenó el ambiente mientras
 entregábamos más de 50 obsequios a las mujeres que se acercaron.
 
-Fue un gesto pequeño en comparación con la inmensa gratitud que sentimos hacia ellas, pero
-esperamos que haya servido como recordatorio de cuán valiosas son para nuestra asociación y
-para la sociedad en su conjunto.
-
 Nuestros programas no solo buscan proporcionar vivienda, sino también mejorarla y legalizar
 títulos para garantizar la seguridad y el bienestar de nuestros miembros. En este Día
 Internacional de la Mujer, celebramos el poder y la resiliencia de todas las mujeres.

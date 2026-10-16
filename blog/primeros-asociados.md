@@ -11,7 +11,7 @@ imagen: assets/blog-asociados.jpg
 La Asociación de Vivienda Popular Mi Sueño, Mi Hogar tiene como objetivo facilitar el
 acceso a una vivienda digna y asequible para las personas de escasos recursos. Para ello
 cuenta con un listado de personas inscritas en calidad de asociados, que cumplen con los
-requisitos establecidos por la asociación y que participan activamente en sus actividades.
+requisitos establecidos por la asociación y participan activamente en sus actividades.
 
 El listado se actualiza periódicamente y se publica en la página web de la asociación, así
 como en sus redes sociales. En esta primera convocatoria damos la bienvenida a quienes
