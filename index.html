@@ -101,12 +101,13 @@
   .banner-left { left: calc((100vw - 1140px) / 2 - 58px); }
   .banner-right { right: calc((100vw - 1140px) / 2 - 58px); animation-delay: -3s; }
   .banner .cap { height: 8px; border-radius: 4px; background: linear-gradient(#5b6572, #2c333c); box-shadow: 0 2px 5px rgba(0,0,0,.3); position: relative; z-index: 2; }
-  .cloth { height: min(86vh, 860px); transform-origin: top center; transform: scaleY(var(--deploy, 0)); transition: transform .12s linear; position: relative; box-shadow: 3px 8px 20px rgba(0,0,0,.22); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 90%, 0 100%); }
+  .cloth { height: min(86vh, 860px); transform-origin: top center; position: relative; box-shadow: 3px 8px 20px rgba(0,0,0,.22); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 90%, 0 100%); animation: unfurl .9s cubic-bezier(.22,.7,.2,1) both; }
   .cloth.co { background: linear-gradient(90deg, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%); }
   .cloth.vr { background: linear-gradient(90deg, #FCD116 0 33.333%, #CE1126 33.333% 66.666%, #178A3A 66.666% 100%); }
   .cloth::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 6px, rgba(0,0,0,.08) 6px 13px); }
   @keyframes sway { 0%, 100% { transform: rotate(-.7deg); } 50% { transform: rotate(.7deg); } }
-  @media (prefers-reduced-motion: reduce) { .banner { animation: none; } .cloth { transition: none; } }
+  @keyframes unfurl { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @media (prefers-reduced-motion: reduce) { .banner { animation: none; } .cloth { animation: none; transform: scaleY(1); } }
 
   nav.tabs { display: flex; gap: 2px; }
   nav.tabs button {
@@ -858,20 +859,6 @@
   if (blogGrid) blogGrid.innerHTML = POSTS.map(cardHTML).join("");
   var homeBlog = $("#homeBlog");
   if (homeBlog) homeBlog.innerHTML = POSTS.slice(0, 3).map(cardHTML).join("");
-
-  /* ---------- Hanging flags: unfurl fully on scroll ---------- */
-  var DEPLOY_DIST = 420;
-  var ticking = false;
-  function updateDeploy() {
-    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    var d = Math.max(0, Math.min(1, y / DEPLOY_DIST));
-    document.documentElement.style.setProperty("--deploy", d.toFixed(3));
-    ticking = false;
-  }
-  window.addEventListener("scroll", function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(updateDeploy); }
-  }, { passive: true });
-  updateDeploy();
 
   function openArticle(id, push) {
     var p = null, i;
