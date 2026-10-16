@@ -1,0 +1,1041 @@
+<title>Mi Sueño, Mi Hogar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* ============================================================
+     Mi Sueño, Mi Hogar — Asociación de Vivienda Popular
+     Layout: branded sticky top bar → tabbed single page
+     (Inicio · Quiénes Somos · Proyectos · Blog) over warm,
+     institutional green + brick-clay accent on warm paper.
+     ============================================================ */
+
+  :root {
+    /* Color */
+    --paper:      #f6f3ec;
+    --surface:    #ffffff;
+    --surface-2:  #efe9dd;
+    --ink:        #1e2420;
+    --muted:      #596158;
+    --line:       #e3ddce;
+    --brand:      #14503a;
+    --brand-ink:  #0e3b2a;
+    --brand-soft: #e4ede7;
+    --accent:     #c9632f;
+    --accent-ink: #a74e22;
+    --accent-soft:#f6e3d5;
+    --header-bg:  #123f2d;
+    --header-fg:  #f3efe6;
+    --header-line:#2a5744;
+    --shadow:     0 1px 2px rgba(20,40,30,.05), 0 10px 30px -18px rgba(20,40,30,.35);
+    --shadow-lg:  0 24px 60px -30px rgba(20,40,30,.45);
+
+    /* Type */
+    --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Libre Franklin", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+    /* Layout */
+    --maxw: 1140px;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0e1512;
+      --surface:    #15201b;
+      --surface-2:  #1b2a23;
+      --ink:        #ecf1ea;
+      --muted:      #a3afa4;
+      --line:       #27332c;
+      --brand:      #52a988;
+      --brand-ink:  #6fc0a0;
+      --brand-soft: #182e26;
+      --accent:     #e08a53;
+      --accent-ink: #ec9d6b;
+      --accent-soft:#2f2016;
+      --header-bg:  #0b1210;
+      --header-fg:  #ecf1ea;
+      --header-line:#223029;
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.7);
+      --shadow-lg:  0 24px 60px -30px rgba(0,0,0,.8);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0e1512;
+    --surface:    #15201b;
+    --surface-2:  #1b2a23;
+    --ink:        #ecf1ea;
+    --muted:      #a3afa4;
+    --line:       #27332c;
+    --brand:      #52a988;
+    --brand-ink:  #6fc0a0;
+    --brand-soft: #182e26;
+    --accent:     #e08a53;
+    --accent-ink: #ec9d6b;
+    --accent-soft:#2f2016;
+    --header-bg:  #0b1210;
+    --header-fg:  #ecf1ea;
+    --header-line:#223029;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.7);
+    --shadow-lg:  0 24px 60px -30px rgba(0,0,0,.8);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 60;
+    background: var(--header-bg);
+  }
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.12; text-wrap: balance; margin: 0; letter-spacing: -.01em; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+  .eyebrow { font-family: var(--body); font-weight: 700; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); margin: 0; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+    background: var(--header-bg); color: var(--header-fg);
+    border-bottom: 1px solid var(--header-line);
+  }
+  .bar { display: flex; align-items: center; gap: 18px; min-height: 68px; padding-block: 10px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+  .brand .badge {
+    width: 44px; height: 44px; border-radius: 12px; background: var(--paper);
+    display: grid; place-items: center; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .brand .badge img { width: 30px; height: 30px; }
+  .brand .name { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand .name b { font-family: var(--display); font-size: 1.04rem; letter-spacing: -.01em; }
+  .brand .name span { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+
+  nav.tabs { display: flex; gap: 2px; }
+  nav.tabs button {
+    font-family: var(--body); font-weight: 600; font-size: .95rem; color: var(--header-fg);
+    background: transparent; border: 0; padding: 9px 15px; border-radius: 999px; cursor: pointer;
+    opacity: .82; transition: background .15s, opacity .15s;
+  }
+  nav.tabs button:hover { opacity: 1; background: rgba(255,255,255,.08); }
+  nav.tabs button[aria-current="true"] { opacity: 1; background: rgba(255,255,255,.14); }
+
+  .header-actions { display: flex; align-items: center; gap: 8px; }
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--header-line);
+    background: transparent; color: var(--header-fg); cursor: pointer; display: grid; place-items: center;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,.08); }
+  .icon-btn svg { width: 19px; height: 19px; }
+  #navToggle { display: none; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--body); font-weight: 700;
+    font-size: .95rem; padding: 11px 20px; border-radius: 999px; cursor: pointer; border: 1px solid transparent;
+    transition: transform .12s, filter .15s, background .15s; white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-accent:hover { filter: brightness(1.06); }
+  .btn-green { background: var(--brand); color: #fff; }
+  .btn-green:hover { filter: brightness(1.08); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { background: var(--surface-2); }
+  .btn-light { background: rgba(255,255,255,.12); color: var(--header-fg); border-color: var(--header-line); }
+  .btn-light:hover { background: rgba(255,255,255,.2); }
+  .btn svg { width: 17px; height: 17px; }
+
+  /* ---------- Sections / tabs ---------- */
+  main { display: block; }
+  .tabpanel { display: block; }
+  .tabpanel[hidden] { display: none !important; }
+  section { padding-block: clamp(52px, 7vw, 92px); }
+  .section-head { max-width: 640px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+  .section-head h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); }
+  .section-head p { color: var(--muted); font-size: 1.08rem; }
+  .lede { color: var(--muted); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-top: clamp(44px, 6vw, 76px); padding-bottom: 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .hero h1 { font-size: clamp(2.3rem, 5.4vw, 4rem); font-weight: 800; letter-spacing: -.025em; }
+  .hero h1 .u { color: var(--brand); position: relative; white-space: nowrap; }
+  .hero-copy { display: flex; flex-direction: column; gap: 22px; }
+  .hero-copy p.sub { font-size: clamp(1.05rem, 2vw, 1.22rem); color: var(--muted); max-width: 34ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-media { position: relative; }
+  .hero-media .photo { border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/3.1; background: var(--surface-2); }
+  .hero-media .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-chip {
+    position: absolute; left: -14px; bottom: -18px; background: var(--surface); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 12px; max-width: 260px;
+  }
+  .hero-chip .ico { width: 42px; height: 42px; border-radius: 10px; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; flex: none; }
+  .hero-chip .ico svg { width: 22px; height: 22px; }
+  .hero-chip b { font-family: var(--display); display: block; font-size: 1rem; }
+  .hero-chip span { font-size: .82rem; color: var(--muted); }
+
+  .trust { margin-top: clamp(48px, 7vw, 76px); border-top: 1px solid var(--line); }
+  .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding-block: 34px; }
+  .stat .n { font-family: var(--display); font-weight: 800; font-size: clamp(1.7rem, 3vw, 2.3rem); color: var(--brand); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: .92rem; color: var(--muted); margin-top: 2px; }
+
+  /* ---------- Bands ---------- */
+  .band-soft { background: var(--surface-2); }
+  .band-green { background: var(--brand); color: #eaf3ee; }
+  .band-green .eyebrow { color: #f0c9a8; }
+  .band-green h2, .band-green h3 { color: #fff; }
+  .band-green .lede, .band-green p { color: #d4e5dc; }
+
+  /* ---------- Cards grid (programas) ---------- */
+  .grid { display: grid; gap: 22px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow);
+    transition: transform .14s, box-shadow .14s;
+  }
+  a.card:hover, button.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .card .thumb { aspect-ratio: 16/10; background: var(--surface-2); overflow: hidden; }
+  .card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .card .body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card .body h3 { font-size: 1.18rem; }
+  .card .body p { color: var(--muted); font-size: .96rem; }
+  .pill { align-self: flex-start; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); }
+  .pill.clay { background: var(--accent-soft); color: var(--accent-ink); }
+  .card .more { margin-top: auto; font-weight: 700; color: var(--accent-ink); font-size: .92rem; display: inline-flex; align-items: center; gap: 6px; }
+  .card .more svg { width: 15px; height: 15px; transition: transform .15s; }
+  a.card:hover .more svg, button.card:hover .more svg { transform: translateX(3px); }
+
+  /* feature program cards with icon (home preview) */
+  .prog { display: flex; flex-direction: column; gap: 12px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .prog .ico { width: 48px; height: 48px; border-radius: 12px; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; }
+  .prog .ico svg { width: 25px; height: 25px; }
+  .prog h3 { font-size: 1.14rem; }
+  .prog p { color: var(--muted); font-size: .95rem; }
+
+  /* ---------- Process steps ---------- */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
+  .step { position: relative; padding: 24px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+  .step .num { font-family: var(--display); font-weight: 800; font-size: 1rem; width: 36px; height: 36px; border-radius: 10px;
+    background: var(--accent); color: #fff; display: grid; place-items: center; margin-bottom: 14px; }
+  .step h3 { font-size: 1.08rem; margin-bottom: 6px; }
+  .step p { color: var(--muted); font-size: .94rem; }
+
+  /* ---------- Split (about / project detail) ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 60px); align-items: center; }
+  .split.rev .media { order: 2; }
+  .split .media { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/3; background: var(--surface-2); }
+  .split .media img { width: 100%; height: 100%; object-fit: cover; }
+  .split .copy { display: flex; flex-direction: column; gap: 16px; }
+  .split .copy h2, .split .copy h3 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+  .split .copy p { color: var(--muted); }
+
+  .valuecards { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+  .vc { padding: 22px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; }
+  .vc .ico { width: 42px; height: 42px; border-radius: 10px; background: var(--accent-soft); color: var(--accent-ink); display: grid; place-items: center; margin-bottom: 4px; }
+  .vc .ico svg { width: 22px; height: 22px; }
+  .vc h3 { font-size: 1.08rem; }
+  .vc p { color: var(--muted); font-size: .95rem; }
+
+  /* checklist */
+  ul.ck { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  ul.ck li { display: flex; gap: 11px; align-items: flex-start; font-size: 1rem; }
+  ul.ck li svg { width: 20px; height: 20px; flex: none; color: var(--brand); margin-top: 3px; }
+  ul.ck.clay li svg { color: var(--accent); }
+
+  .factline { display: flex; flex-wrap: wrap; gap: 10px; }
+  .fact { background: var(--brand-soft); color: var(--brand-ink); border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: .9rem; }
+  .fact b { color: var(--accent-ink); }
+
+  /* ---------- Team ---------- */
+  .team { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .member { display: grid; grid-template-columns: 150px 1fr; gap: 22px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .member .avatar { width: 150px; height: 180px; border-radius: 12px; overflow: hidden; background: var(--surface-2); }
+  .member .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .member h3 { font-size: 1.25rem; }
+  .member .role { color: var(--accent-ink); font-weight: 700; font-size: .92rem; letter-spacing: .02em; margin: 2px 0 10px; }
+  .member p { color: var(--muted); font-size: .95rem; }
+
+  /* ---------- Project detail block ---------- */
+  .project { padding-block: clamp(40px, 6vw, 72px); border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
+  .project:last-child { border-bottom: 0; }
+
+  /* ---------- Blog ---------- */
+  .article-view[hidden] { display: none !important; }
+  .back-link { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; color: var(--accent-ink); cursor: pointer; background: none; border: 0; font-family: var(--body); font-size: .95rem; padding: 0; margin-bottom: 26px; }
+  .back-link svg { width: 16px; height: 16px; }
+  .article { max-width: 720px; margin-inline: auto; }
+  .article .cover { border-radius: 18px; overflow: hidden; aspect-ratio: 16/8; margin: 24px 0 30px; box-shadow: var(--shadow); background: var(--surface-2); }
+  .article .cover img { width: 100%; height: 100%; object-fit: cover; }
+  .article h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; }
+  .article .meta { display: flex; gap: 14px; align-items: center; color: var(--muted); font-size: .9rem; margin-top: 14px; }
+  .article .meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); }
+  .article .content { margin-top: 10px; display: flex; flex-direction: column; gap: 18px; font-size: 1.07rem; line-height: 1.72; }
+  .article .content h2 { font-size: 1.4rem; margin-top: 12px; }
+  .article .content ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; color: var(--ink); }
+  .article .content blockquote { margin: 4px 0; padding: 14px 20px; border-left: 4px solid var(--accent); background: var(--surface-2); border-radius: 0 10px 10px 0; color: var(--ink); }
+
+  /* ---------- Contact ---------- */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 56px); align-items: start; }
+  .contact-list { display: flex; flex-direction: column; gap: 14px; }
+  .ci { display: flex; gap: 14px; align-items: center; background: rgba(255,255,255,.07); border: 1px solid var(--header-line); border-radius: 12px; padding: 14px 16px; }
+  .band-green .ci { }
+  .ci .ico { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,.14); display: grid; place-items: center; flex: none; }
+  .ci .ico svg { width: 21px; height: 21px; color: #fff; }
+  .ci .t { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: #c0d6cb; }
+  .ci .v { font-weight: 700; font-size: 1.04rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .copy-btn { background: rgba(255,255,255,.14); border: 0; color: #fff; border-radius: 7px; padding: 4px 9px; font-size: .74rem; font-weight: 700; cursor: pointer; font-family: var(--body); }
+  .copy-btn:hover { background: rgba(255,255,255,.26); }
+
+  .form-card { background: var(--surface); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow-lg); }
+  .form-card h3 { color: var(--ink); font-size: 1.3rem; margin-bottom: 4px; }
+  .form-card p.hint { color: var(--muted); font-size: .92rem; margin-bottom: 18px; }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .field label { font-size: .82rem; font-weight: 700; color: var(--ink); letter-spacing: .02em; }
+  .field input, .field textarea, .field select {
+    font-family: var(--body); font-size: 1rem; padding: 11px 13px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--paper); color: var(--ink); width: 100%;
+  }
+  .field textarea { resize: vertical; min-height: 92px; }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+
+  /* ---------- Footer ---------- */
+  footer.site { background: var(--header-bg); color: var(--header-fg); padding-block: 48px 30px; border-top: 1px solid var(--header-line); }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+  footer.site .brand .name b, footer.site .brand .name span { color: var(--header-fg); }
+  .foot-col h4 { font-family: var(--display); font-size: .95rem; margin-bottom: 14px; letter-spacing: .02em; }
+  .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .foot-col a, .foot-col li { color: #bcd0c6; font-size: .94rem; cursor: pointer; }
+  .foot-col a:hover { color: #fff; }
+  .foot-about p { color: #bcd0c6; font-size: .94rem; max-width: 34ch; margin-top: 14px; }
+  .foot-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--header-line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #a7bdb1; font-size: .86rem; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--paper); padding: 12px 20px; border-radius: 999px; font-weight: 600; font-size: .92rem;
+    box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 80;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-media { order: -1; max-width: 520px; }
+    .hero-copy p.sub { max-width: none; }
+    .trust-grid { grid-template-columns: repeat(2,1fr); }
+    .grid-4 { grid-template-columns: repeat(2,1fr); }
+    .grid-3 { grid-template-columns: repeat(2,1fr); }
+    .steps { grid-template-columns: repeat(2,1fr); }
+    .split { grid-template-columns: 1fr; }
+    .split.rev .media { order: 0; }
+    .team { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 760px) {
+    nav.tabs {
+      position: fixed; inset: auto 0 0 0; top: auto; background: var(--header-bg);
+      flex-direction: column; gap: 0; padding: 8px max(16px, env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));
+      border-top: 1px solid var(--header-line); transform: translateY(110%); transition: transform .22s ease; z-index: 55;
+      box-shadow: 0 -12px 30px -18px rgba(0,0,0,.5);
+    }
+    nav.tabs.open { transform: translateY(0); }
+    nav.tabs button { text-align: left; padding: 13px 10px; border-radius: 10px; font-size: 1.02rem; }
+    #navToggle { display: grid; }
+    .header-actions .btn.hide-sm { display: none; }
+  }
+  @media (max-width: 620px) {
+    body { font-size: 16px; }
+    .valuecards { grid-template-columns: 1fr; }
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .member { grid-template-columns: 1fr; }
+    .member .avatar { width: 120px; height: 140px; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .brand .name span { display: none; }
+    .hero-chip { position: static; margin-top: 26px; max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+
+<!-- ================= HEADER ================= -->
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" data-tab="inicio" aria-label="Mi Sueño, Mi Hogar — inicio">
+      <span class="badge"><img src="assets/logo.png" alt="" width="30" height="30"></span>
+      <span class="name"><b>Mi Sueño, Mi Hogar</b><span>Asociación de Vivienda Popular</span></span>
+    </a>
+    <nav class="tabs" id="tabs" aria-label="Secciones">
+      <button data-tab="inicio" aria-current="true">Inicio</button>
+      <button data-tab="nosotros">Quiénes somos</button>
+      <button data-tab="proyectos">Proyectos</button>
+      <button data-tab="blog">Blog</button>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      </button>
+      <a class="btn btn-accent hide-sm" href="https://wa.me/573123045226" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 001.516 5.26l-.999 3.648 3.973-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        WhatsApp
+      </a>
+      <button class="icon-btn" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= INICIO ================= -->
+<div class="tabpanel" id="panel-inicio">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Villa del Rosario · Norte de Santander</p>
+          <h1>Tu sueño de tener <span class="u">casa propia</span>, hecho realidad</h1>
+          <p class="sub">Somos una asociación de vivienda popular que acompaña a las familias para acceder, mejorar y legalizar su vivienda a través de los programas del Estado.</p>
+          <div class="hero-cta">
+            <button class="btn btn-green" data-tab="proyectos">Conoce los programas</button>
+            <a class="btn btn-ghost" href="https://wa.me/573123045226" target="_blank" rel="noopener">Quiero asociarme</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="photo"><img src="assets/hero-home.webp" alt="Mano sosteniendo una casa y las llaves de un nuevo hogar" width="900" height="700"></div>
+          <div class="hero-chip">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+            <div><b>Vivienda, mejoramiento y titulación</b><span>Beneficios que gestionamos para ti</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust">
+        <div class="trust-grid">
+          <div class="stat"><div class="n">4</div><div class="l">Programas de vivienda que gestionamos</div></div>
+          <div class="stat"><div class="n">30 SMMLV</div><div class="l">Subsidio a la cuota inicial con Mi Casa Ya</div></div>
+          <div class="stat"><div class="n">400.000</div><div class="l">Hogares meta del programa Cambia Mi Casa</div></div>
+          <div class="stat"><div class="n">100%</div><div class="l">Vivienda subsidiada para los más vulnerables</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-soft">
+    <div class="wrap split">
+      <div class="media"><img src="assets/familia.webp" alt="Familia frente a su nueva vivienda" width="700" height="525"></div>
+      <div class="copy">
+        <p class="eyebrow">Sobre nosotros</p>
+        <h2>Organizarnos es el primer paso hacia un hogar digno</h2>
+        <p>MI SUEÑO, MI HOGAR ayuda a que las personas se organicen para obtener o mejorar su vivienda. A través de la asociación podrás gestionar <strong>vivienda</strong>, <strong>mejoramiento de vivienda y entorno</strong> y <strong>legalización de títulos</strong>.</p>
+        <p>Las soluciones incluyen adquisición de terrenos, vivienda nueva y vivienda usada, con subsidios como Mi Casa Ya o la vivienda gratuita con enfoque diferencial para las poblaciones más vulnerables.</p>
+        <div><button class="btn btn-green" data-tab="nosotros">Conoce la asociación</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Nuestros programas</p>
+        <h2>Un camino para cada necesidad de vivienda</h2>
+        <p>Gestionamos los principales programas del Gobierno para que tu hogar acceda al que mejor se ajuste a su situación.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="prog">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></span>
+          <h3>Mi Casa Ya</h3>
+          <p>Subsidio a la cuota inicial para comprar vivienda nueva a los hogares más vulnerables.</p>
+        </div>
+        <div class="prog">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7-4 4"/><path d="M3 21l6-1 9-9-5-5-9 9-1 6z"/></svg></span>
+          <h3>Cambia Mi Casa</h3>
+          <p>Mejoramientos de vivienda para elevar la calidad de vida en zonas urbanas y rurales.</p>
+        </div>
+        <div class="prog">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-5h6v5"/></svg></span>
+          <h3>Vivienda Rural</h3>
+          <p>Vivienda nueva o mejoramiento para hogares vulnerables del campo colombiano.</p>
+        </div>
+        <div class="prog">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-8.5C.5 9 2 5 5.5 5 7.5 5 9 6.5 12 9c3-2.5 4.5-4 6.5-4C22 5 23.5 9 21.5 12.5 19 16.65 12 21 12 21z"/></svg></span>
+          <h3>Viviendas 100% Subsidiadas</h3>
+          <p>Para hogares en pobreza extrema que no acceden al crédito tradicional.</p>
+        </div>
+      </div>
+      <div style="margin-top:28px"><button class="btn btn-accent" data-tab="proyectos">Ver todos los programas</button></div>
+    </div>
+  </section>
+
+  <section class="band-soft">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Cómo funciona</p>
+        <h2>De la inscripción a las llaves de tu casa</h2>
+        <p>Un proceso claro y acompañado en cada etapa por el equipo de la asociación.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>Asóciate</h3><p>Regístrate como asociado y haz parte de la comunidad Mi Sueño, Mi Hogar.</p></div>
+        <div class="step"><div class="num">2</div><h3>Verificamos tu perfil</h3><p>Revisamos tu clasificación del Sisbén IV y los requisitos del programa que te corresponde.</p></div>
+        <div class="step"><div class="num">3</div><h3>Gestionamos el subsidio</h3><p>Te acompañamos en el trámite ante la entidad y el Ministerio de Vivienda.</p></div>
+        <div class="step"><div class="num">4</div><h3>Recibe o mejora tu vivienda</h3><p>Accede a tu casa nueva, mejora la actual o legaliza el título de tu propiedad.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Blog y noticias</p>
+        <h2>Lo que pasa en nuestra comunidad</h2>
+        <p>Historias, eventos y novedades de la asociación.</p>
+      </div>
+      <div class="grid grid-3" id="homeBlog"></div>
+      <div style="margin-top:28px"><button class="btn btn-ghost" data-tab="blog">Ver todo el blog</button></div>
+    </div>
+  </section>
+
+  <section class="band-green" id="contacto">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <p class="eyebrow">Contacto</p>
+          <h2>¿Listo para empezar tu proceso?</h2>
+          <p class="lede" style="margin:14px 0 26px">Escríbenos por WhatsApp o déjanos un mensaje. Resolvemos tus dudas sobre asociarte y acceder a los programas de vivienda.</p>
+          <div class="contact-list">
+            <div class="ci">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+              <div><div class="t">Teléfono / WhatsApp</div><div class="v"><span id="phoneVal">312 304 5226</span><button class="copy-btn" data-copy="3123045226">Copiar</button></div></div>
+            </div>
+            <div class="ci">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></span>
+              <div><div class="t">Correo</div><div class="v"><span>contacto@misuenomihogar.com</span><button class="copy-btn" data-copy="contacto@misuenomihogar.com">Copiar</button></div></div>
+            </div>
+            <div class="ci">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <div><div class="t">Dónde estamos</div><div class="v">Villa del Rosario · Barrio La Parada</div></div>
+            </div>
+          </div>
+        </div>
+        <form class="form-card" id="contactForm" novalidate>
+          <h3>Déjanos tu mensaje</h3>
+          <p class="hint">Completa el formulario y se abrirá WhatsApp con tu mensaje listo para enviar.</p>
+          <div class="field"><label for="cf-name">Nombre</label><input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre completo"></div>
+          <div class="field"><label for="cf-topic">Me interesa</label>
+            <select id="cf-topic" name="topic">
+              <option>Asociarme</option>
+              <option>Mi Casa Ya</option>
+              <option>Cambia Mi Casa</option>
+              <option>Vivienda Rural</option>
+              <option>Viviendas 100% Subsidiadas</option>
+              <option>Otra consulta</option>
+            </select>
+          </div>
+          <div class="field"><label for="cf-msg">Mensaje</label><textarea id="cf-msg" name="msg" placeholder="Cuéntanos tu caso"></textarea></div>
+          <button class="btn btn-accent" type="submit" style="width:100%;justify-content:center">Enviar por WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= QUIÉNES SOMOS ================= -->
+<div class="tabpanel" id="panel-nosotros" hidden>
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Quiénes somos</p>
+        <h2>Una asociación nueva, con un propósito firme</h2>
+        <p>MI SUEÑO, MI HOGAR es una asociación de vivienda popular que ayuda a que las personas se organicen y puedan obtener o mejorar sus viviendas, gestionando vivienda, mejoramiento de vivienda y entorno, y legalización de títulos.</p>
+      </div>
+      <div class="split">
+        <div class="media"><img src="assets/construccion.webp" alt="Trabajadores construyendo una vivienda" width="700" height="525"></div>
+        <div class="copy">
+          <h3>Hecha realidad desde Villa del Rosario</h3>
+          <p>Nuestra historia está marcada por la pasión y la determinación de quienes la lideran. La asociación nació con el propósito de hacer realidad los sueños de las familias rosarienses de tener un hogar propio.</p>
+          <p>Lo que nos distingue es la experiencia de nuestro equipo. Con su visión y conocimientos, hemos construido una base sólida para enfrentar los desafíos y las oportunidades de la vivienda popular en Colombia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-soft">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Nuestra identidad</p>
+        <h2>En qué creemos</h2>
+      </div>
+      <div class="valuecards">
+        <div class="vc">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <h3>Nuestra visión</h3>
+          <p>Miramos al futuro con optimismo y el compromiso de usar la experiencia y pasión de nuestro equipo para hacer una diferencia real. Queremos ser un referente en la promoción de vivienda popular en Colombia.</p>
+        </div>
+        <div class="vc">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <h3>Nuestra experiencia</h3>
+          <p>Un equipo con visión y conocimiento del sector inmobiliario y comunitario, que trabaja con cercanía para acompañar a cada familia en su proceso.</p>
+        </div>
+        <div class="vc">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg></span>
+          <h3>Nuestros valores</h3>
+          <p>Valoramos la transparencia, la equidad y la solidaridad. Creemos que cada paso, aunque sea pequeño, contribuye a un futuro mejor para las comunidades a las que servimos.</p>
+        </div>
+        <div class="vc">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+          <h3>Nuestra misión</h3>
+          <p>Facilitar el acceso a una vivienda digna y asequible para las personas de escasos recursos, organizando a la comunidad y gestionando los programas disponibles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Nuestro equipo</p>
+        <h2>Las personas que lideran la asociación</h2>
+        <p>Conoce al equipo de la Asociación de Vivienda Popular Mi Sueño, Mi Hogar.</p>
+      </div>
+      <div class="team">
+        <div class="member">
+          <div class="avatar"><img src="assets/laura.webp" alt="Laura Rivera, Presidenta" width="150" height="180"></div>
+          <div>
+            <h3>Laura Rivera</h3>
+            <div class="role">Presidenta</div>
+            <p>Abogada con amplia experiencia en el sector inmobiliario en Colombia. Su compromiso y liderazgo en la promoción de vivienda popular la han convertido en una figura clave de la asociación. Aporta su experiencia y conocimientos para guiarnos hacia la misión de brindar hogares dignos a las familias colombianas.</p>
+          </div>
+        </div>
+        <div class="member">
+          <div class="avatar"><img src="assets/ronaldo.webp" alt="Ronaldo Duran, Vicepresidente" width="150" height="180"></div>
+          <div>
+            <h3>Ronaldo Duran</h3>
+            <div class="role">Vicepresidente</div>
+            <p>Ingeniero de sistemas con habilidades de liderazgo. Su experiencia liderando jóvenes y comunidad, sumada a su trayectoria laboral, lo hacen una persona indicada para liderar la asociación de vivienda Mi Sueño, Mi Hogar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PROYECTOS ================= -->
+<div class="tabpanel" id="panel-proyectos" hidden>
+  <section style="padding-bottom:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Programas de vivienda</p>
+        <h2>Proyectos que gestionamos</h2>
+        <p>Estos son los programas del Gobierno que acompañamos desde la asociación. Te ayudamos a saber cuál te corresponde y a adelantar tu trámite.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- Mi Casa Ya -->
+    <div class="project" id="mi-casa-ya">
+      <div class="split">
+        <div class="media"><img src="assets/proyecto.webp" alt="Proyecto de vivienda nueva" width="700" height="525"></div>
+        <div class="copy">
+          <span class="pill clay">Vivienda nueva</span>
+          <h2>Mi Casa Ya</h2>
+          <p>Programa a través del cual el Gobierno entrega subsidios para comprar vivienda nueva a los hogares más vulnerables. Dirigido a colombianas y colombianos que no han sido beneficiarios de otro subsidio ni cobertura a la tasa de interés, y que no son propietarios en el territorio nacional.</p>
+          <ul class="ck clay">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Haber realizado la encuesta Sisbén IV con clasificación entre A1 y D20.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Subsidio de 30 SMMLV para hogares entre A1 y C8; de 20 SMMLV entre C9 y D20.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>La inscripción se realiza en el establecimiento de crédito o entidad de economía solidaria.</li>
+          </ul>
+          <div class="factline">
+            <span class="fact"><b>Hasta 30</b> SMMLV</span>
+            <span class="fact">Sisbén IV A1–D20</span>
+            <span class="fact">Vivienda nueva</span>
+          </div>
+          <div><a class="btn btn-green" href="https://wa.me/573123045226?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20Mi%20Casa%20Ya" target="_blank" rel="noopener">Consultar Mi Casa Ya</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cambia Mi Casa -->
+    <div class="project" id="cambia-mi-casa">
+      <div class="split rev">
+        <div class="media"><img src="assets/cambiacasa.webp" alt="Mejoramiento de una vivienda" width="700" height="525"></div>
+        <div class="copy">
+          <span class="pill">Mejoramiento</span>
+          <h2>Cambia Mi Casa</h2>
+          <p>Programa de mejoramientos de vivienda que busca mejorar la calidad de vida de 400.000 hogares, en áreas urbanas y rurales, cuyas viviendas están en condiciones habitacionales inadecuadas. Según el DANE, en 2021 el 31% de los hogares vivía en déficit habitacional.</p>
+          <ul class="ck">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Mejora pisos, paredes, cocina, saneamiento básico y conexión a servicios públicos.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Vincula a organizaciones comunitarias (OPV, JAC, cooperativas) para fortalecer la economía local.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Prioriza municipios de categorías 4, 5 y 6, y municipios PDET.</li>
+          </ul>
+          <div class="factline">
+            <span class="fact"><b>400.000</b> hogares</span>
+            <span class="fact">Urbano y rural</span>
+            <span class="fact">Déficit cualitativo</span>
+          </div>
+          <div><a class="btn btn-green" href="https://wa.me/573123045226?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20Cambia%20Mi%20Casa" target="_blank" rel="noopener">Consultar Cambia Mi Casa</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vivienda Rural -->
+    <div class="project" id="vivienda-rural">
+      <div class="split">
+        <div class="media"><img src="assets/familia.webp" alt="Familia rural beneficiaria" width="700" height="525"></div>
+        <div class="copy">
+          <span class="pill">Zona rural</span>
+          <h2>Vivienda Rural</h2>
+          <p>Política que beneficia a los hogares vulnerables que viven en zona rural y requieren una vivienda nueva o el mejoramiento de una existente, priorizando la vivienda digna, segura, saludable y sostenible.</p>
+          <ul class="ck">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Prioriza jefatura femenina, madres comunitarias, personas con discapacidad, adultos mayores y niñez.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Atención a comunidades étnicas y población víctima del conflicto armado.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Especial atención a municipios PDET y zonas con mayor déficit habitacional.</li>
+          </ul>
+          <div class="factline">
+            <span class="fact">6 tipologías</span>
+            <span class="fact">Enfoque diferencial</span>
+            <span class="fact">Territorio nacional</span>
+          </div>
+          <div><a class="btn btn-green" href="https://wa.me/573123045226?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20Vivienda%20Rural" target="_blank" rel="noopener">Consultar Vivienda Rural</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 100% Subsidiadas -->
+    <div class="project" id="viviendas-subsidiadas">
+      <div class="split rev">
+        <div class="media"><img src="assets/construccion.webp" alt="Viviendas en construcción" width="700" height="525"></div>
+        <div class="copy">
+          <span class="pill clay">Enfoque social</span>
+          <h2>Viviendas 100% Subsidiadas</h2>
+          <p>Programa que nace como respuesta a la realidad de miles de hogares en situación de extrema pobreza que no logran acceder a un crédito por los mecanismos tradicionales del mercado. El subsidio cubre la totalidad de la vivienda.</p>
+          <ul class="ck clay">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Dirigido a los hogares más vulnerables del país.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Enfoque diferencial para las poblaciones que más lo necesitan.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Te acompañamos en la postulación y el seguimiento del proceso.</li>
+          </ul>
+          <div class="factline">
+            <span class="fact"><b>100%</b> subsidiada</span>
+            <span class="fact">Pobreza extrema</span>
+            <span class="fact">Vivienda gratuita</span>
+          </div>
+          <div><a class="btn btn-green" href="https://wa.me/573123045226?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20Viviendas%20100%25%20Subsidiadas" target="_blank" rel="noopener">Consultar programa</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="band-green">
+    <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px">
+      <h2 style="font-size:clamp(1.6rem,3.4vw,2.4rem);max-width:18ch">¿No sabes cuál programa te corresponde?</h2>
+      <p class="lede" style="max-width:52ch">Cuéntanos tu situación y te orientamos sobre el programa que mejor se ajusta a tu hogar.</p>
+      <a class="btn btn-light" href="https://wa.me/573123045226" target="_blank" rel="noopener" style="background:#fff;color:var(--brand-ink);border:0">Hablar con la asociación</a>
+    </div>
+  </section>
+</div>
+
+<!-- ================= BLOG ================= -->
+<div class="tabpanel" id="panel-blog" hidden>
+  <section>
+    <div class="wrap">
+      <div class="blog-list" id="blogList">
+        <div class="section-head">
+          <p class="eyebrow">Blog y noticias</p>
+          <h2>Historias de nuestra comunidad</h2>
+          <p>Eventos, celebraciones y novedades de la Asociación de Vivienda Popular Mi Sueño, Mi Hogar.</p>
+        </div>
+        <div class="grid grid-3" id="blogGrid"></div>
+      </div>
+
+      <div class="article-view" id="articleView" hidden>
+        <button class="back-link" id="backBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Volver al blog</button>
+        <article class="article" id="articleBody"></article>
+        <div style="max-width:720px;margin:40px auto 0;text-align:center">
+          <a class="btn btn-green" href="https://wa.me/573123045226" target="_blank" rel="noopener">Quiero asociarme</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col foot-about">
+        <div class="brand">
+          <span class="badge"><img src="assets/logo.png" alt="" width="30" height="30"></span>
+          <span class="name"><b>Mi Sueño, Mi Hogar</b><span>Asociación de Vivienda Popular</span></span>
+        </div>
+        <p>Ayudamos a las familias a organizarse para acceder, mejorar y legalizar su vivienda en Villa del Rosario y toda Colombia.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Secciones</h4>
+        <ul>
+          <li><a data-tab="inicio">Inicio</a></li>
+          <li><a data-tab="nosotros">Quiénes somos</a></li>
+          <li><a data-tab="proyectos">Proyectos</a></li>
+          <li><a data-tab="blog">Blog</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Programas</h4>
+        <ul>
+          <li><a data-tab="proyectos" data-anchor="mi-casa-ya">Mi Casa Ya</a></li>
+          <li><a data-tab="proyectos" data-anchor="cambia-mi-casa">Cambia Mi Casa</a></li>
+          <li><a data-tab="proyectos" data-anchor="vivienda-rural">Vivienda Rural</a></li>
+          <li><a data-tab="proyectos" data-anchor="viviendas-subsidiadas">100% Subsidiadas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li>Tel: 312 304 5226</li>
+          <li>contacto@misuenomihogar.com</li>
+          <li>Villa del Rosario, N. de S.</li>
+          <li><a href="https://wa.me/573123045226" target="_blank" rel="noopener">Escríbenos por WhatsApp →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2024 Asociación de Vivienda Popular Mi Sueño, Mi Hogar. Todos los derechos reservados.</span>
+      <span>Vivienda · Mejoramiento · Legalización de títulos</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Blog data (sync with /blog/*.md) ---------- */
+  var POSTS = [
+    {
+      id: "dia-del-hombre", cat: "Comunidad", date: "19 mar 2024", dateISO: "2024-03-19",
+      title: "Celebrando el Día del Hombre",
+      excerpt: "Reconocimos la dedicación y el compromiso de los hombres que forman parte de nuestra comunidad.",
+      img: "assets/blog-hombre.jpg",
+      html: "<p>El 19 de marzo celebramos el Día del Hombre en la Asociación de Vivienda Popular Mi Sueño, Mi Hogar. Es un momento para reconocer y apreciar la vitalidad, la dedicación y el compromiso de los hombres que forman parte de nuestra comunidad.</p><p>Sabemos que el éxito y la prosperidad de nuestras familias dependen del esfuerzo conjunto de todos sus miembros, independientemente de su género. Los hombres asociados con nosotros son una parte integral de nuestra misión de proporcionar vivienda adecuada y mejorar la calidad de vida de nuestras comunidades. Su fuerza, su ingenio y su dedicación son fundamentales para impulsar el progreso y el desarrollo.</p><p>En este día especial queremos expresar nuestro más profundo agradecimiento a todos los hombres asociados con Mi Sueño, Mi Hogar. Su labor incansable y su compromiso con nuestra asociación son invaluables, y celebramos todo lo que han logrado y todo lo que continuarán logrando en el futuro.</p>"
+    },
+    {
+      id: "dia-de-la-mujer", cat: "Comunidad", date: "8 mar 2024", dateISO: "2024-03-08",
+      title: "Celebrando el Día Internacional de la Mujer",
+      excerpt: "Celebramos junto a nuestras asociadas en el barrio La Parada, con más de 50 obsequios entregados.",
+      img: "assets/blog-mujer.jpg",
+      html: "<p>El 8 de marzo es un día emblemático en todo el mundo: un momento para celebrar los logros, la resistencia y el poder de las mujeres. En la Asociación de Vivienda Popular Mi Sueño, Mi Hogar este día no pasó desapercibido.</p><p>Nos reunimos en el barrio La Parada para honrar a todas las mujeres asociadas que día a día contribuyen con su esfuerzo y dedicación a hacer de nuestros hogares y nuestra comunidad un lugar mejor. El espíritu de solidaridad y empoderamiento llenó el ambiente mientras entregábamos más de 50 obsequios a las mujeres que se acercaron.</p><p>Nuestros programas no solo buscan proporcionar vivienda, sino también mejorarla y legalizar títulos para garantizar la seguridad y el bienestar de nuestros miembros. En este Día Internacional de la Mujer, celebramos el poder y la resiliencia de todas las mujeres.</p>"
+    },
+    {
+      id: "primeros-asociados", cat: "Asociación", date: "9 ene 2024", dateISO: "2024-01-09",
+      title: "Primeros asociados",
+      excerpt: "Publicamos el listado de las primeras personas inscritas como asociadas de la organización.",
+      img: "assets/blog-asociados.jpg",
+      html: "<p>La Asociación de Vivienda Popular Mi Sueño, Mi Hogar tiene como objetivo facilitar el acceso a una vivienda digna y asequible para las personas de escasos recursos. Para ello cuenta con un listado de personas inscritas en calidad de asociados, que cumplen con los requisitos establecidos por la asociación y participan activamente en sus actividades.</p><p>El listado se actualiza periódicamente y se publica en la página web de la asociación, así como en sus redes sociales. En esta primera convocatoria damos la bienvenida a quienes decidieron dar el primer paso hacia su hogar propio.</p><blockquote>Dudas e inquietudes al WhatsApp 312 304 5226.</blockquote>"
+    },
+    {
+      id: "primera-reunion", cat: "Comunidad", date: "29 nov 2023", dateISO: "2023-11-29",
+      title: "Primera reunión de la asociación",
+      excerpt: "Te contamos los detalles de la primera reunión de los asociados de Mi Sueño, Mi Hogar.",
+      img: "assets/familia.webp",
+      html: "<p><strong>¡Invitación a reunión!</strong> Queridos asociados y futuros miembros de la Asociación Mi Sueño, Mi Hogar: fue un placer convocarlos a nuestra primera reunión, un espacio donde unimos fuerzas para construir juntos los sueños de mejorar nuestras viviendas.</p><p>La cita fue el jueves 30 de noviembre a las 7:00 p. m. en la Carrera 10 con Calle 4, La Parada — Parqueadero \"Donde Pacho\".</p><h2>Agenda de la reunión</h2><ul><li><strong>Formalización de inscripciones</strong> para quienes aún no las habían completado.</li><li><strong>Construcción de sueños:</strong> cómo planeamos hacer realidad los proyectos de nuestros asociados.</li><li><strong>Mejoramientos de vivienda:</strong> información detallada sobre beneficios, requisitos y pasos a seguir.</li></ul><p>¡Gracias por contar con nosotros en este primer paso!</p>"
+    }
+  ];
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ---------- Blog rendering ---------- */
+  function cardHTML(p) {
+    return '<button class="card" data-post="' + p.id + '">' +
+      '<span class="thumb"><img src="' + p.img + '" alt="" loading="lazy"></span>' +
+      '<span class="body">' +
+      '<span class="pill">' + p.cat + '</span>' +
+      '<h3>' + p.title + '</h3>' +
+      '<p>' + p.excerpt + '</p>' +
+      '<span class="more">Leer más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>' +
+      '</span></button>';
+  }
+  var blogGrid = $("#blogGrid");
+  if (blogGrid) blogGrid.innerHTML = POSTS.map(cardHTML).join("");
+  var homeBlog = $("#homeBlog");
+  if (homeBlog) homeBlog.innerHTML = POSTS.slice(0, 3).map(cardHTML).join("");
+
+  function openArticle(id, push) {
+    var p = null, i;
+    for (i = 0; i < POSTS.length; i++) if (POSTS[i].id === id) p = POSTS[i];
+    if (!p) return;
+    $("#articleBody").innerHTML =
+      '<p class="eyebrow">' + p.cat + '</p>' +
+      '<h1>' + p.title + '</h1>' +
+      '<div class="meta"><time datetime="' + p.dateISO + '">' + p.date + '</time><span class="dot"></span><span>Mi Sueño, Mi Hogar</span></div>' +
+      '<div class="cover"><img src="' + p.img + '" alt=""></div>' +
+      '<div class="content">' + p.html + '</div>';
+    $("#blogList").hidden = true;
+    $("#articleView").hidden = false;
+    setTab("blog", false);
+    window.scrollTo({ top: 0, behavior: push ? "smooth" : "auto" });
+    if (push) history.replaceState(null, "", "#blog/" + id);
+  }
+  function closeArticle() {
+    $("#articleView").hidden = true;
+    $("#blogList").hidden = false;
+    history.replaceState(null, "", "#blog");
+  }
+
+  document.addEventListener("click", function (e) {
+    var card = e.target.closest("[data-post]");
+    if (card) { openArticle(card.getAttribute("data-post"), true); return; }
+  });
+  $("#backBtn").addEventListener("click", closeArticle);
+
+  /* ---------- Tabs ---------- */
+  var TABS = ["inicio", "nosotros", "proyectos", "blog"];
+  function setTab(name, scroll) {
+    if (TABS.indexOf(name) < 0) name = "inicio";
+    TABS.forEach(function (t) {
+      var panel = $("#panel-" + t);
+      if (panel) panel.hidden = (t !== name);
+    });
+    $$("#tabs button").forEach(function (b) {
+      b.setAttribute("aria-current", b.getAttribute("data-tab") === name ? "true" : "false");
+    });
+    if (name !== "blog") { $("#articleView").hidden = true; $("#blogList").hidden = false; }
+    if (scroll !== false) window.scrollTo({ top: 0, behavior: "auto" });
+    closeNav();
+  }
+
+  function navTo(name, anchor) {
+    setTab(name);
+    if (anchor) {
+      history.replaceState(null, "", "#" + name + "/" + anchor);
+      requestAnimationFrame(function () {
+        var el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    } else {
+      history.replaceState(null, "", "#" + name);
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-tab]");
+    if (!t) return;
+    e.preventDefault();
+    navTo(t.getAttribute("data-tab"), t.getAttribute("data-anchor"));
+  });
+
+  /* ---------- Mobile nav ---------- */
+  var tabsEl = $("#tabs"), toggle = $("#navToggle");
+  function closeNav() { tabsEl.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
+  toggle.addEventListener("click", function () {
+    var open = tabsEl.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  /* ---------- Deep link on load ---------- */
+  function initFromHash() {
+    var h = (location.hash || "").replace(/^#/, "");
+    if (!h) { setTab("inicio"); return; }
+    var parts = h.split("/");
+    if (parts[0] === "blog" && parts[1]) { openArticle(parts[1], false); return; }
+    if (parts[0] === "proyectos" && parts[1]) { navTo("proyectos", parts[1]); return; }
+    setTab(parts[0]);
+  }
+  initFromHash();
+
+  /* ---------- Contact form → WhatsApp ---------- */
+  var form = $("#contactForm");
+  if (form) form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("#cf-name").value.trim();
+    var topic = $("#cf-topic").value;
+    var msg = $("#cf-msg").value.trim();
+    var text = "Hola, soy " + (name || "una persona interesada") + ". Me interesa: " + topic + ".";
+    if (msg) text += " " + msg;
+    var url = "https://wa.me/573123045226?text=" + encodeURIComponent(text);
+    window.open(url, "_blank", "noopener");
+    showToast("Abriendo WhatsApp…");
+  });
+
+  /* ---------- Copy buttons ---------- */
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-copy]");
+    if (!b) return;
+    var val = b.getAttribute("data-copy");
+    function ok() { showToast("Copiado: " + val); }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(val).then(ok).catch(function () { legacyCopy(val, ok); });
+      } else { legacyCopy(val, ok); }
+    } catch (err) { legacyCopy(val, ok); }
+  });
+  function legacyCopy(val, ok) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = val; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select(); document.execCommand("copy");
+      document.body.removeChild(ta); ok();
+    } catch (e2) { showToast("No se pudo copiar"); }
+  }
+
+  /* ---------- Toast ---------- */
+  var toastEl = $("#toast"), toastT;
+  function showToast(m) {
+    toastEl.textContent = m; toastEl.classList.add("show");
+    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("show"); }, 2200);
+  }
+
+  /* ---------- Theme toggle ---------- */
+  var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>';
+  var moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>';
+  var themeBtn = $("#themeBtn");
+  function applyTheme(mode) {
+    if (mode === "dark" || mode === "light") document.documentElement.setAttribute("data-theme", mode);
+    else document.documentElement.removeAttribute("data-theme");
+    var isDark = mode === "dark" || (mode !== "light" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    $("#themeIcon").outerHTML = (isDark ? sun : moon).replace("<svg", '<svg id="themeIcon"');
+  }
+  var saved = null;
+  try { saved = localStorage.getItem("msmh-theme"); } catch (e) {}
+  applyTheme(saved || "system");
+  themeBtn.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    var isDark = cur === "dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var next = isDark ? "light" : "dark";
+    applyTheme(next);
+    try { localStorage.setItem("msmh-theme", next); } catch (e) {}
+  });
+})();
+</script>
