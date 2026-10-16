@@ -92,16 +92,6 @@
   .flag { width: 25px; height: 16px; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.14); display: block; flex: none; }
   .flag svg { display: block; width: 100%; height: 100%; }
 
-  /* "Nuestra tierra" band with the painted Colombia flag */
-  .pride { background: var(--surface); border-block: 1px solid var(--line); }
-  .pride-inner { display: flex; align-items: center; justify-content: center; gap: clamp(24px, 5vw, 64px); padding-block: clamp(28px, 5vw, 46px); flex-wrap: wrap; }
-  .pride-flag { flex: none; width: clamp(180px, 32vw, 272px); }
-  .pride-flag img { width: 100%; height: auto; display: block; filter: drop-shadow(0 10px 22px rgba(16,42,80,.16)); }
-  .pride-copy { max-width: 42ch; }
-  .pride-copy h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 8px; }
-  .pride-copy p.lead { color: var(--muted); margin-top: 8px; }
-  .vr-line { display: inline-flex; align-items: center; gap: 9px; margin-top: 16px; font-weight: 700; font-size: .92rem; color: var(--ink); }
-  @media (max-width: 620px) { .pride-inner { flex-direction: column; text-align: center; } .vr-line { justify-content: center; } }
 
   nav.tabs { display: flex; gap: 2px; }
   nav.tabs button {
@@ -425,18 +415,6 @@
           <div class="stat"><div class="n">≈ 2%</div><div class="l">Tasa de crédito de vivienda que busca el Gobierno</div></div>
           <div class="stat"><div class="n">3 beneficios</div><div class="l">Vivienda, mejoramiento y legalización de títulos</div></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pride">
-    <div class="wrap pride-inner">
-      <div class="pride-flag"><img src="assets/bandera-colombia.png" alt="Bandera de Colombia en estilo pincel" width="340" height="340"></div>
-      <div class="pride-copy">
-        <p class="eyebrow">Nuestra tierra</p>
-        <h2>Orgullosamente de Villa del Rosario, Colombia</h2>
-        <p class="lead">Trabajamos por el hogar de las familias de nuestra región, cuna de la Gran Colombia.</p>
-        <span class="vr-line"><span class="flag" title="Villa del Rosario" role="img" aria-label="Bandera de Villa del Rosario"><svg viewBox="0 0 24 15" preserveAspectRatio="none"><rect width="24" height="5" fill="#FCD116"/><rect y="5" width="24" height="5" fill="#CE1126"/><rect y="10" width="24" height="5" fill="#178a3a"/></svg></span> Villa del Rosario, Norte de Santander</span>
       </div>
     </div>
   </section>
