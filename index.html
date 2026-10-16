@@ -92,13 +92,26 @@
   .flag { width: 25px; height: 16px; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.14); display: block; flex: none; }
   .flag svg { display: block; width: 100%; height: 100%; }
 
-  /* Festive flag garland / bunting (responsive, drawn to width in JS) */
-  .garland { width: 100%; height: 62px; margin-bottom: 2px; pointer-events: none; overflow: hidden; }
-  .garland svg { display: block; width: 100%; height: 100%; }
-  .garland .pennant { transform-box: fill-box; transform-origin: top center; animation: pennant-sway 4.5s ease-in-out infinite; }
-  @keyframes pennant-sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-  @media (max-width: 620px) { .garland { height: 50px; } }
-  @media (prefers-reduced-motion: reduce) { .garland .pennant { animation: none; } }
+  /* Hanging flags as an in-page element (works on PC and mobile) */
+  .pride { background: var(--surface); border-block: 1px solid var(--line); }
+  .pride-inner { display: flex; align-items: center; justify-content: center; gap: clamp(22px, 5vw, 60px); padding-block: clamp(30px, 5vw, 48px); flex-wrap: wrap; }
+  .pennants { display: flex; gap: 22px; flex: none; }
+  .mini { margin: 0; width: 52px; display: flex; flex-direction: column; align-items: center; }
+  .mini .staff { width: 100%; transform-origin: top center; animation: sway 5s ease-in-out infinite; }
+  .mini:nth-child(2) .staff { animation-delay: -2.5s; }
+  .mini .cap { height: 6px; border-radius: 3px; background: linear-gradient(#5b6572, #2c333c); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+  .mini .cloth2 { height: 70px; position: relative; transform-origin: top center; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%); box-shadow: 2px 6px 13px rgba(0,0,0,.18); animation: unfurl .8s cubic-bezier(.22,.7,.2,1) both; }
+  .mini .cloth2.co { background: linear-gradient(90deg, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%); }
+  .mini .cloth2.vr { background: linear-gradient(90deg, #FCD116 0 33.333%, #CE1126 33.333% 66.666%, #178A3A 66.666% 100%); }
+  .mini .cloth2::after { content: ""; position: absolute; inset: 0; clip-path: inherit; background: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 5px, rgba(0,0,0,.08) 5px 11px); }
+  .mini figcaption { margin-top: 10px; font-size: .72rem; font-weight: 700; letter-spacing: .04em; color: var(--muted); text-align: center; }
+  .pride-copy { max-width: 42ch; }
+  .pride-copy h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 8px; }
+  .pride-copy p.lead { color: var(--muted); margin-top: 8px; }
+  @keyframes sway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+  @keyframes unfurl { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @media (max-width: 620px) { .pride-inner { flex-direction: column; text-align: center; } }
+  @media (prefers-reduced-motion: reduce) { .mini .staff { animation: none; } .mini .cloth2 { animation: none; transform: scaleY(1); } }
 
   nav.tabs { display: flex; gap: 2px; }
   nav.tabs button {
@@ -391,7 +404,6 @@
 </header>
 
 <main>
-<div class="garland" id="garland" aria-hidden="true"></div>
 <!-- ================= INICIO ================= -->
 <div class="tabpanel" id="panel-inicio">
 
@@ -423,6 +435,20 @@
           <div class="stat"><div class="n">≈ 2%</div><div class="l">Tasa de crédito de vivienda que busca el Gobierno</div></div>
           <div class="stat"><div class="n">3 beneficios</div><div class="l">Vivienda, mejoramiento y legalización de títulos</div></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride">
+    <div class="wrap pride-inner">
+      <div class="pennants">
+        <figure class="mini"><div class="staff"><div class="cap"></div><div class="cloth2 co"></div></div><figcaption>Colombia</figcaption></figure>
+        <figure class="mini"><div class="staff"><div class="cap"></div><div class="cloth2 vr"></div></div><figcaption>Villa del Rosario</figcaption></figure>
+      </div>
+      <div class="pride-copy">
+        <p class="eyebrow">Nuestra tierra</p>
+        <h2>Orgullosamente de Villa del Rosario, Colombia</h2>
+        <p class="lead">Trabajamos por el hogar de las familias de nuestra región, cuna de la Gran Colombia.</p>
       </div>
     </div>
   </section>
@@ -846,32 +872,6 @@
   if (blogGrid) blogGrid.innerHTML = POSTS.map(cardHTML).join("");
   var homeBlog = $("#homeBlog");
   if (homeBlog) homeBlog.innerHTML = POSTS.slice(0, 3).map(cardHTML).join("");
-
-  /* ---------- Festive flag garland (bunting), drawn to width ---------- */
-  function buildGarland() {
-    var el = $("#garland"); if (!el) return;
-    var w = Math.max(320, Math.round(el.clientWidth || window.innerWidth)), h = 62;
-    var step = 50, n = Math.max(5, Math.round(w / step)); step = w / n;
-    var topY = 9, sag = 14, pennH = 30;
-    var colors = ["#FCD116", "#003893", "#CE1126", "#FCD116", "#CE1126", "#178A3A"];
-    var cord = "M0," + topY, pennants = "", i;
-    for (i = 0; i < n; i++) {
-      var x1 = (i + 1) * step, mx = (i + 0.5) * step, hangY = topY + sag;
-      cord += " Q" + mx.toFixed(1) + "," + (topY + sag + 3).toFixed(1) + " " + x1.toFixed(1) + "," + topY;
-      var pw = step * 0.76, lx = mx - pw / 2, rx = mx + pw / 2, c = colors[i % colors.length];
-      var delay = (-(i % 5) * 0.4).toFixed(1);
-      pennants += '<g class="pennant" style="animation-delay:' + delay + 's">'
-        + '<path d="M' + lx.toFixed(1) + "," + hangY + " L" + rx.toFixed(1) + "," + hangY + " L" + mx.toFixed(1) + "," + (hangY + pennH) + ' Z" fill="' + c + '"/>'
-        + '<path d="M' + lx.toFixed(1) + "," + hangY + " L" + rx.toFixed(1) + "," + hangY + " L" + mx.toFixed(1) + "," + (hangY + pennH * 0.42) + ' Z" fill="rgba(255,255,255,.18)"/>'
-        + '<circle cx="' + mx.toFixed(1) + '" cy="' + hangY + '" r="2.3" fill="#7f8690"/>'
-        + "</g>";
-    }
-    el.innerHTML = '<svg viewBox="0 0 ' + w + " " + h + '" width="' + w + '" height="' + h + '" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">'
-      + '<path d="' + cord + '" fill="none" stroke="#9aa1ac" stroke-width="2"/>' + pennants + "</svg>";
-  }
-  buildGarland();
-  var garlandT;
-  window.addEventListener("resize", function () { clearTimeout(garlandT); garlandT = setTimeout(buildGarland, 160); }, { passive: true });
 
   function openArticle(id, push) {
     var p = null, i;
