@@ -177,7 +177,7 @@
   .note { font-size: .86rem; color: var(--muted); font-style: italic; }
 
   /* ---------- Hero ---------- */
-  .hero { padding-top: clamp(44px, 6vw, 76px); padding-bottom: 0; }
+  .hero { padding-top: clamp(44px, 6vw, 76px); padding-bottom: 0; background: var(--surface); }
   .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
   .hero h1 { font-size: clamp(2.3rem, 5.4vw, 4rem); font-weight: 800; letter-spacing: -.025em; }
   .hero h1 .u { color: var(--accent-ink); position: relative; white-space: nowrap; }
@@ -287,15 +287,17 @@
   .project { padding-block: clamp(40px, 6vw, 72px); border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
   .project:last-child { border-bottom: 0; }
 
-  /* ---------- Reel (video link card) ---------- */
-  .reel { position: relative; display: block; cursor: pointer; }
+  /* ---------- Reel (embed + poster fallback) ---------- */
+  .reel-wrap { width: 100%; max-width: 380px; margin-inline: auto; min-width: 0; }
+  .reel { position: relative; display: block; cursor: pointer; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/5; background: var(--surface-2); }
   .reel img { width: 100%; height: 100%; object-fit: cover; }
-  .reel::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(5,30,45,.05) 40%, rgba(5,30,45,.6)); }
+  .reel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,30,45,.05) 35%, rgba(5,30,45,.62)); }
   .reel-play { position: absolute; inset: 0; margin: auto; width: 74px; height: 74px; border-radius: 50%; background: rgba(255,255,255,.94); display: grid; place-items: center; z-index: 2; box-shadow: 0 10px 28px rgba(0,0,0,.35); transition: transform .15s; }
   .reel:hover .reel-play { transform: scale(1.07); }
   .reel-play svg { width: 30px; height: 30px; color: var(--brand); margin-left: 4px; }
   .reel-cap { position: absolute; left: 16px; right: 16px; bottom: 15px; z-index: 2; color: #fff; font-weight: 600; font-size: .9rem; line-height: 1.35; display: flex; align-items: center; gap: 9px; }
   .reel-cap svg { width: 20px; height: 20px; flex: none; }
+  .ig-embed { margin: 0 auto !important; max-width: 100% !important; min-width: 0 !important; }
 
   /* ---------- Blog ---------- */
   .article-view[hidden] { display: none !important; }
@@ -682,12 +684,17 @@
 
     <!-- Mejoramiento de vivienda -->
     <div class="project" id="mejoramiento-vivienda">
-      <div class="split rev">
-        <a class="media reel" href="https://www.instagram.com/reel/DebwgbPRX8j/" target="_blank" rel="noopener" aria-label="Ver el reel de Minvivienda sobre mejoramiento de vivienda en Instagram">
-          <img src="assets/cambiacasa.webp" alt="Mejoramiento de vivienda" width="700" height="525">
-          <span class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="reel-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>Mira cómo funciona · reel de @minvivienda</span>
-        </a>
+      <div class="split">
+        <div class="reel-wrap">
+          <a class="reel reel-fallback" href="https://www.instagram.com/reel/DebwgbPRX8j/" target="_blank" rel="noopener" aria-label="Ver el reel de Minvivienda sobre mejoramiento de vivienda en Instagram">
+            <img src="assets/cambiacasa.webp" alt="Mejoramiento de vivienda" width="700" height="875">
+            <span class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="reel-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>Mira cómo funciona · reel de @minvivienda</span>
+          </a>
+          <blockquote class="instagram-media ig-embed" data-instgrm-permalink="https://www.instagram.com/reel/DebwgbPRX8j/?utm_source=ig_embed" data-instgrm-version="14" style="display:none;background:#FFF;border:0;border-radius:3px;margin:0 auto;max-width:540px;min-width:0;width:100%;">
+            <a href="https://www.instagram.com/reel/DebwgbPRX8j/?utm_source=ig_embed" target="_blank" rel="noopener">Ver el reel de @minvivienda en Instagram</a>
+          </blockquote>
+        </div>
         <div class="copy">
           <span class="pill">Te ayudamos a gestionar</span>
           <h2>Mejoramiento de vivienda</h2>
@@ -1022,5 +1029,18 @@
     applyTheme(next);
     try { localStorage.setItem("msmh-theme", next); } catch (e) {}
   });
+
+  /* ---------- Instagram reel: embed real al publicar; tarjeta de respaldo en la vista previa ---------- */
+  function revealReel(n) {
+    if (window.instgrm && window.instgrm.Embeds) {
+      $$(".reel-fallback").forEach(function (f) { f.style.display = "none"; });
+      $$(".ig-embed").forEach(function (b) { b.style.display = ""; });
+      try { window.instgrm.Embeds.process(); } catch (e) {}
+    } else if (n > 0) {
+      setTimeout(function () { revealReel(n - 1); }, 400);
+    }
+  }
+  revealReel(12);
 })();
 </script>
+<script async src="https://www.instagram.com/embed.js"></script>
